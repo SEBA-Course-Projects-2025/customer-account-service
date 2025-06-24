@@ -357,10 +357,10 @@ paths:
       summary: Get order by ID
       tags:
       - orders
-    put:
+    patch:
       consumes:
       - application/json
-      description: Updates the status of an order for the given customer.
+      description: Partially updates the status of an order for the given customer.
       parameters:
       - description: Bearer access token
         in: header
@@ -384,10 +384,9 @@ paths:
         "200":
           description: OK
           schema:
-            additionalProperties: true
-            type: object
+            $ref: '#/definitions/dtos.OneOrderResponse'
         "400":
-          description: Invalid vendorId, orderId, or request body
+          description: Invalid customerId, orderId, or request body
           schema:
             additionalProperties: true
             type: object
@@ -401,7 +400,7 @@ paths:
           schema:
             additionalProperties: true
             type: object
-      summary: Update order status
+      summary: Partially update order status
       tags:
       - orders
 schemes:

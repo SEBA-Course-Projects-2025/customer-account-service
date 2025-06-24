@@ -391,8 +391,8 @@ const docTemplate = `{
                     }
                 }
             },
-            "put": {
-                "description": "Updates the status of an order for the given customer.",
+            "patch": {
+                "description": "Partially updates the status of an order for the given customer.",
                 "consumes": [
                     "application/json"
                 ],
@@ -402,7 +402,7 @@ const docTemplate = `{
                 "tags": [
                     "orders"
                 ],
-                "summary": "Update order status",
+                "summary": "Partially update order status",
                 "parameters": [
                     {
                         "type": "string",
@@ -432,12 +432,11 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/dtos.OneOrderResponse"
                         }
                     },
                     "400": {
-                        "description": "Invalid vendorId, orderId, or request body",
+                        "description": "Invalid customerId, orderId, or request body",
                         "schema": {
                             "type": "object",
                             "additionalProperties": true
