@@ -1,0 +1,53 @@
+package handlers
+
+import (
+	"customer-account-service/customer-account-service/internal/account/application/services"
+	"customer-account-service/customer-account-service/internal/account/dtos"
+	"errors"
+	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+	"gorm.io/gorm"
+	"net/http"
+)
+
+// PutAccountHandler godoc
+// @Summary      Fully update account
+// @Description  Fully updates the account for the given customer.
+// @Tags         accounts
+// @Accept       json
+// @Produce      json
+// @Param        Authorization header string true "Bearer access token"
+// @Param        accountReq body dtos.PutRequestDto true "Account updated data"
+// @Success      200 {object} map[string]interface{}
+// @Failure      400 {object} map[string]interface{} "Invalid customerId or account data"
+// @Failure      404 {object} map[string]interface{} "Account not found"
+// @Failure      500 {object} map[string]interface{}
+// @Router       /account [put]
+func (h *AccountHandler) PutAccountHandler(c *gin.Context) {
+
+	v, _ := c.Get("customerId")
+	customerId, ok := v.(uuid.UUID)
+	if !ok {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid customerId"})
+		return
+	}
+
+	var accountReq dtos.PutRequestDto
+
+	if err := c.ShouldBindJSON(&accountReq); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid account data"})
+		return
+	}
+
+	if err := services.PutAccount(c.Request.Context(), h.AccountRepo, accountReq, customerId); err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Account not found"})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{})
+
+}
