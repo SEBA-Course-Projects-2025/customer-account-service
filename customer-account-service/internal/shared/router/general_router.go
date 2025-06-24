@@ -1,6 +1,7 @@
 package router
 
 import (
+	_ "customer-account-service/docs"
 	accountInterfaces "customer-account-service/customer-account-service/internal/account/interfaces"
 	accountHandlers "customer-account-service/customer-account-service/internal/account/interfaces/handlers"
 	orderInterfaces "customer-account-service/customer-account-service/internal/orders/interfaces"
