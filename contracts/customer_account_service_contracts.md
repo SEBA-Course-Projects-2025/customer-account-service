@@ -173,13 +173,34 @@ __Status codes:__
 
 ## 6. Cancel Orders
 
-__PUT ```api/orders/:orderId```__
+__PATCH ```api/orders/:orderId```__
 
 __Body:__
 
 ```json
 {
   "status": "string"
+}
+```
+
+__Response:__
+
+```json
+{
+  "orderId": "uuid",
+  "customerId": "uuid",
+  "items": [
+    {
+      "productId": "uuid",
+      "product_name": "string",
+      "quantity": "int",
+      "image_url": "string",
+      "unit_price": "float64"
+    }
+  ],
+  "totalPrice": "float64",
+  "status": "string",
+  "date": "date"
 }
 ```
 
