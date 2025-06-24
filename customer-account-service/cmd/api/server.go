@@ -14,12 +14,12 @@ import (
 	"time"
 )
 
-// @title Vendor Service API
+// @title Customer Service API
 // @version 1.0
-// @description API for managing vendor account.
+// @description API for managing customer account.
 
 // @schemes https
-// @host localhost:8082
+// @host customer-account-service.onrender.com
 // @BasePath /api
 func main() {
 
